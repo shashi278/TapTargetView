@@ -4,7 +4,7 @@ An attempt to mimic android's TapTargetView using Python and Kivy.
 Inspired by [Android's TapTargetView](https://github.com/KeepSafe/TapTargetView)
 
 ## Current Demo
-![TapTargetView demo](demo/ttv_demo.gif)
+![TapTargetView demo](demo/ttv_demo_2.gif)
 
 #### TODO:
 * Track clicks inside `outer_circle`
