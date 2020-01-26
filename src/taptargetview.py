@@ -27,11 +27,11 @@ class TapTargetView(EventDispatcher):
         target_radius=dp(70),
         target_circle_color=[1,1,1],
         title_text="",
-        title_text_size= 25,
+        title_text_size= dp(25),
         title_text_color=[1,1,1,1],
         title_text_bold= True,
         description_text="",
-        description_text_size=20,
+        description_text_size=dp(20),
         description_text_color=[.9,.9,.9,1],
         description_text_bold= False,
         draw_shadow=False,
@@ -406,10 +406,10 @@ BoxLayout:
 
             ttv4= TapTargetView(
                 add_btn,
-                outer_radius=450,
+                outer_radius=dp(450),
                 outer_circle_color= self.theme_cls.primary_color[:-1],
                 outer_circle_alpha= .9,
-                target_radius=90,
+                target_radius=dp(90),
                 target_circle_color= [1,1,1],
                 title_text= "This is an add button",
                 description_text="Click here to add a new data",
@@ -420,10 +420,10 @@ BoxLayout:
 
             ttv3= TapTargetView(
                 info_btn,
-                outer_radius=650,
+                outer_radius=dp(650),
                 outer_circle_color= self.theme_cls.primary_color[:-1],
                 outer_circle_alpha= .8,
-                target_radius=90,
+                target_radius=dp(90),
                 target_circle_color=[255/255, 34/255, 212/255],
                 title_text= "This is the info button",
                 description_text="No information available yet!",
@@ -435,10 +435,10 @@ BoxLayout:
 
             ttv2= TapTargetView(
                 search_btn,
-                outer_radius=600,
+                outer_radius=dp(600),
                 outer_circle_color= [155/255, 89/255, 182/255],
                 outer_circle_alpha= .95,
-                target_radius=90,
+                target_radius=dp(90),
                 target_circle_color=[.2,.2,.2],
                 title_text= "This is the search button",
                 description_text="It won't search anything for now.",
@@ -450,10 +450,10 @@ BoxLayout:
 
             ttv1= TapTargetView(
                 menu_btn,
-                outer_radius=600,
+                outer_radius=dp(600),
                 outer_circle_color= self.theme_cls.primary_color[:-1],
                 outer_circle_alpha= .85,
-                target_radius=100,
+                target_radius=(100),
                 title_text= "Menu Button",
                 description_text="Opens up the drawer",
                 widget_position="center",
