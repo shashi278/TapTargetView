@@ -89,7 +89,7 @@ class TapTargetViewDemo(App):
             title_text= "This is an add button",
             description_text="Click here to add a new data",
             widget_position="left_bottom",
-            #on_end=self.set_text
+            on_end=self.set_text
         )
 
         ttv3= TapTargetView(
