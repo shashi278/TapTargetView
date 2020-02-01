@@ -80,7 +80,7 @@ class TapTargetView(EventDispatcher):
                                 Defaults to False
         stop_on_target_touch:   (optional), whether clicking on target circle should stop the animation
                                 Defaults to True
-        on_end:                 (optional), Function to be called when the animation ends by clicking the button.
+        on_end:                 (optional), Function to be called when the animation stops.
                                 Defaults to None
         """
         self.widget= widget
@@ -122,6 +122,7 @@ class TapTargetView(EventDispatcher):
         super(TapTargetView,self).__init__(**kwargs)
         self.register_event_type("on_outer_touch")
         self.register_event_type("on_target_touch")
+        self.register_event_type("on_outside_click")
 
     def _initialize(self):
         setattr(self.widget, "outer_radius", 0)
@@ -135,7 +136,7 @@ class TapTargetView(EventDispatcher):
         # to get bind at once and start messing up
         self.widget.bind(on_touch_down=self._some_func)
     
-    def draw_canvas(self):
+    def _draw_canvas(self):
         _pos= self._ttv_pos()
 
         self.widget.canvas.before.clear()
@@ -222,7 +223,7 @@ class TapTargetView(EventDispatcher):
             **dict(zip(["outer_radius", "target_radius"],[self.outer_radius, self.target_radius]))
         )
         anim.cancel_all(self.widget)
-        anim.bind(on_progress= lambda x,y,z: self.draw_canvas())
+        anim.bind(on_progress= lambda x,y,z: self._draw_canvas())
         anim.bind(on_complete=self._animate_ripple)
         anim.start(self.widget)
         setattr(self.widget, "target_ripple_radius", self.target_radius)
@@ -236,7 +237,7 @@ class TapTargetView(EventDispatcher):
             target_ripple_alpha=0
         )
         self.anim_ripple.stop_all(self.widget)
-        self.anim_ripple.bind(on_progress= lambda x,y,z: self.draw_canvas())
+        self.anim_ripple.bind(on_progress= lambda x,y,z: self._draw_canvas())
         self.anim_ripple.bind(on_complete=self._repeat_ripple)
         self.anim_ripple.start(self.widget)
     
@@ -255,16 +256,23 @@ class TapTargetView(EventDispatcher):
         if self.stop_on_outer_touch:
             self.stop()
     
+    def on_outside_click(self):
+        if self.cancelable:
+            self.stop()
+    
     def _some_func(self, wid, touch):
         """
         This function decides which one to dispatch
         based on the touch position
         """
-        if self._check_pos_outer(touch.pos) and not self._check_pos_target(touch.pos):
-            self.dispatch("on_outer_touch")
-
         if self._check_pos_target(touch.pos):
             self.dispatch("on_target_touch")
+
+        elif self._check_pos_outer(touch.pos):
+            self.dispatch("on_outer_touch")
+        
+        else:
+            self.dispatch("on_outside_click")
     
     def _check_pos_outer(self, pos):
         """

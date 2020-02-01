@@ -84,12 +84,13 @@ class TapTargetViewDemo(App):
         ttv4= TapTargetView(
             x.ids.add_btn,
             outer_radius=dp(225),
+            cancelable=True,
             outer_circle_color= self.theme_cls.primary_color[:-1],
             outer_circle_alpha= .9,
             title_text= "This is an add button",
-            description_text="Click here to add a new data",
+            description_text="You can cancel it by clicking outside",
             widget_position="left_bottom",
-            #on_end=self.set_text
+            on_end=self.set_text
         )
 
         ttv3= TapTargetView(
