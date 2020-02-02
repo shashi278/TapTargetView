@@ -1,1 +1,0 @@
-Contains demo gif file
