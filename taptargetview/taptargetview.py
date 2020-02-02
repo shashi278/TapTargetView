@@ -1,6 +1,6 @@
 
 """
-Attempt to mimic the working of Android's TapTargetView using Kivy in Python.
+Attempt to mimic the working of Android's TapTargetView using Kivy and Python.
 Here's android one: https://github.com/KeepSafe/TapTargetView
 
 Author: Shashi Ranjan(https://github.com/shashi278)
@@ -389,3 +389,5 @@ class TapTargetView(EventDispatcher):
         self.circ_pos= circ_pos
         return circ_pos,title_pos
 
+if __name__=="__main__":
+    pass
