@@ -1,0 +1,35 @@
+cache: pip
+
+matrix:
+  fast_finish: true
+  include:
+    - name: "Black"
+      env: RUN=black
+      language: python
+      python: 3.7
+      os: linux
+      dist: bionic
+
+install:
+  - pip list
+  - if [ "${RUN}" == "black" ]; then
+      pip install black;
+    fi;
+
+script:
+  - if [ "${RUN}" == "black" ]; then
+        black --check --verbose .;
+    fi;
+
+after_failure:
+  - sleep 10;
+  - echo == End ==
+
+deploy:
+  provider: pypi
+  user: "__token__"
+  password:
+    secure: "pypi-AgEIcHlwaS5vcmcCJDJlNmM1NzUzLTYyZWEtNDg3YS1iMGZhLTkzNzI2NWJlNjM1YwACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogMX0AAAYgcXbq9BC1CZQdwjaEJMHbmXC2zVnYMV1Qi1wi3tfNIkM"
+  distributions: "sdist bdist_wheel"
+  on:
+    tags: true
