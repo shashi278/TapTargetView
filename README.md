@@ -6,9 +6,7 @@ Inspired by [Android's TapTargetView](https://github.com/KeepSafe/TapTargetView)
 ## Current Demo
 ![TapTargetView demo](demo/ttv_demo_2.gif)
 
-#### TODO:
-* [x] Track clicks inside `outer_circle`
-* [x] Track clicks inside `target_circle` and remove the requirement of binding on widget's events
-* [ ] Add shadow property
-* [ ] Better implementation of function to stop animation
-* [ ] Improve ripple animation
+## Install and Usage
+* This package can be installed using pip: `pip install taptargetview`
+* Import it as: `from taptargetview.taptargetview import TapTargetView`
+* Refer to [demo](demo/ttv_demo.py) for usages.
