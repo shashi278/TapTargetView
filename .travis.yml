@@ -10,7 +10,7 @@ matrix:
       os: linux
       dist: bionic
 
-script: python3 demo/ttv_demo.py
+script: python3 test/test1.py
 
 after_failure:
   - sleep 10;
