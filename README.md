@@ -1,7 +1,5 @@
-# TapTargetView
+# TapTargetView [![Build Status](https://travis-ci.org/shashi278/TapTargetView.svg?branch=master)](https://travis-ci.org/shashi278/TapTargetView)
 An attempt to mimic android's TapTargetView using Python and Kivy.
-
-[![Build Status](https://travis-ci.org/shashi278/TapTargetView.svg?branch=master)](https://travis-ci.org/shashi278/TapTargetView)
 
 Inspired by [Android's TapTargetView](https://github.com/KeepSafe/TapTargetView)
 
