@@ -16,10 +16,6 @@ install:
       pip install black;
     fi;
 
-script:
-  - if [ "${RUN}" == "black" ]; then
-        black --check --verbose .;
-    fi;
 
 after_failure:
   - sleep 10;
