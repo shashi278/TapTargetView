@@ -10,12 +10,6 @@ matrix:
       os: linux
       dist: bionic
 
-install:
-  - pip list
-  - if [ "${RUN}" == "black" ]; then
-      pip install black;
-    fi;
-
 
 after_failure:
   - sleep 10;
