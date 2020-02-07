@@ -103,7 +103,7 @@ class TapTargetView(EventDispatcher):
         self.stop_on_target_touch= stop_on_target_touch
         self.on_end= on_end
 
-        self.ripple_max_dist=dp(70)
+        self.ripple_max_dist=dp(90)
 
         self.title_text= CoreLabel(
             text=title_text,
@@ -142,49 +142,54 @@ class TapTargetView(EventDispatcher):
         self.widget.canvas.before.clear()
         with self.widget.canvas.before:
             #outer circle
-            Color(*self.outer_circle_color, self.outer_circle_alpha)
+            Color(*self.outer_circle_color, self.outer_circle_alpha, group= "ttv_group")
             _rad1= self.widget.outer_radius
             Ellipse(
                 size=(_rad1, _rad1),
-                pos= _pos[0]
+                pos= _pos[0],
+                group= "ttv_group"
             )
             
             #Title text
-            Color(*self.title_text_color)
+            Color(*self.title_text_color,group= "ttv_group")
             Rectangle(
                 size= self.title_text.size,
                 texture= self.title_text,
-                pos= _pos[1]
+                pos= _pos[1],
+                group= "ttv_group"
             )
             
             #Description text
-            Color(*self.description_text_color)
+            Color(*self.description_text_color,group= "ttv_group")
             Rectangle(
                 size= self.description_text.size,
                 texture= self.description_text,
-                pos= (_pos[1][0], _pos[1][1]-self.description_text.size[1]-5)
+                pos= (_pos[1][0], _pos[1][1]-self.description_text.size[1]-5),
+                group= "ttv_group"
             )
             
             #target circle
-            Color(*self.target_circle_color)
+            Color(*self.target_circle_color,group= "ttv_group")
             _rad2= self.widget.target_radius
             Ellipse(
                 size=(_rad2, _rad2),
                 pos=(
                     self.widget.x-(_rad2/2-self.widget.size[0]/2),
                     self.widget.y-(_rad2/2-self.widget.size[0]/2)
-                )
+                ),
+                group= "ttv_group"
             )
 
             #target ripple
-            Color(*self.target_circle_color, self.widget.target_ripple_alpha)
+            Color(*self.target_circle_color, self.widget.target_ripple_alpha,group= "ttv_group")
             _rad3= self.widget.target_ripple_radius
             Ellipse(
                 size=(_rad3, _rad3),
                 pos=(
                     self.widget.x-(_rad3/2-self.widget.size[0]/2),
                     self.widget.y-(_rad3/2-self.widget.size[0]/2)
-                )
+                ),
+                group= "ttv_group"
             )
         
     def stop(self, *args):
@@ -202,8 +207,13 @@ class TapTargetView(EventDispatcher):
         anim.start(self.widget)
         
     def _after_stop(self, *args):
-        self.widget.canvas.before.clear()
+        self.widget.canvas.before.remove_group("ttv_group")
         args[0].stop_all(self.widget)
+
+        elev= getattr(self.widget,"elevation",None)
+        if elev:
+            self._fix_elev()
+
         if self.on_end:
             self.on_end()
 
@@ -212,13 +222,31 @@ class TapTargetView(EventDispatcher):
         # up with other next bindings
         self.widget.unbind(on_touch_down=self._some_func)
     
+    def _fix_elev(self):
+        with self.widget.canvas.before:
+            Color(a= self.widget._soft_shadow_a)
+            Rectangle(
+                texture= self.widget._soft_shadow_texture,
+                size= self.widget._soft_shadow_size,
+                pos= self.widget._soft_shadow_pos
+            )
+                
+            Color(a= self.widget._hard_shadow_a)
+            Rectangle(
+                texture= self.widget._hard_shadow_texture,
+                size= self.widget._hard_shadow_size,
+                pos= self.widget._hard_shadow_pos
+            )
+                
+            Color(a= 1)
+    
     def start(self):
         self._initialize()
         self._animate_outer()
     
     def _animate_outer(self):
         anim= Animation(
-            d=.3,
+            d=.2,
             t="out_cubic",
             **dict(zip(["outer_radius", "target_radius"],[self.outer_radius, self.target_radius]))
         )
