@@ -1,14 +1,13 @@
-
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.metrics import dp,sp
+from kivy.metrics import dp, sp
 
 from kivymd.uix.button import MDIconButton
 from kivymd.theming import ThemeManager
 
 from taptargetview.taptargetview import TapTargetView
 
-example_kv="""
+example_kv = """
 BoxLayout:
     orientation:"vertical"
 
@@ -74,64 +73,66 @@ BoxLayout:
 
 """
 
+
 class TapTargetViewDemo(App):
-    theme_cls= ThemeManager()
+    theme_cls = ThemeManager()
 
     def build(self):
-        x= Builder.load_string(example_kv)
-        self.lbl= x.ids.lbl
-        self.final_text="Congrats! You're \n educated now!!"
+        x = Builder.load_string(example_kv)
+        self.lbl = x.ids.lbl
+        self.final_text = "Congrats! You're \n educated now!!"
 
-        ttv4= TapTargetView(
+        ttv4 = TapTargetView(
             x.ids.add_btn,
             outer_radius=dp(225),
             cancelable=True,
-            outer_circle_color= self.theme_cls.primary_color[:-1],
-            outer_circle_alpha= .9,
-            title_text= "This is an add button",
+            outer_circle_color=self.theme_cls.primary_color[:-1],
+            outer_circle_alpha=0.9,
+            title_text="This is an add button",
             description_text="You can cancel it by clicking outside",
             widget_position="left_bottom",
-            on_end=self.set_text
+            on_end=self.set_text,
         )
 
-        ttv3= TapTargetView(
+        ttv3 = TapTargetView(
             x.ids.info_btn,
             outer_radius=dp(325),
-            outer_circle_color= self.theme_cls.primary_color[:-1],
-            outer_circle_alpha= .8,
-            target_circle_color=[255/255, 34/255, 212/255],
-            title_text= "This is the info button",
+            outer_circle_color=self.theme_cls.primary_color[:-1],
+            outer_circle_alpha=0.8,
+            target_circle_color=[255 / 255, 34 / 255, 212 / 255],
+            title_text="This is the info button",
             description_text="No information available yet!",
             widget_position="center",
             title_position="left_bottom",
-            on_end=ttv4.start
+            on_end=ttv4.start,
         )
 
-        ttv2= TapTargetView(
+        ttv2 = TapTargetView(
             x.ids.search_btn,
-            outer_circle_color= [155/255, 89/255, 182/255],
-            target_circle_color=[.2,.2,.2],
-            title_text= "This is the search button",
+            outer_circle_color=[155 / 255, 89 / 255, 182 / 255],
+            target_circle_color=[0.2, 0.2, 0.2],
+            title_text="This is the search button",
             description_text="It won't search anything for now.",
             widget_position="center",
             title_position="left_bottom",
-            on_end=ttv3.start
+            on_end=ttv3.start,
         )
 
-        ttv1= TapTargetView(
+        ttv1 = TapTargetView(
             x.ids.menu_btn,
-            outer_circle_color= self.theme_cls.primary_color[:-1],
-            outer_circle_alpha= .85,
-            title_text= "Menu Button",
+            outer_circle_color=self.theme_cls.primary_color[:-1],
+            outer_circle_alpha=0.85,
+            title_text="Menu Button",
             description_text="Opens up the drawer",
             widget_position="center",
             title_position="right_bottom",
-            on_end= ttv2.start
+            on_end=ttv2.start,
         )
         ttv1.start()
         return x
-    
+
     def set_text(self):
-        self.lbl.text= self.final_text
+        self.lbl.text = self.final_text
+
 
 TapTargetViewDemo().run()
