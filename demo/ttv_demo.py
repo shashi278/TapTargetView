@@ -2,20 +2,20 @@ from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
 
+from kivymd.app import MDApp
 from kivymd.uix.behaviors import (
     RectangularElevationBehavior,
     SpecificBackgroundColorBehavior,
 )
-from kivymd.app import MDApp
 
 from taptargetview.taptargetview import TapTargetView
 
-KV = """
+example_kv = """
 Screen:
 
     Image:
-        source: "data/logo/kivy-icon-512.png"
-
+        source: "kivymd_logo.png"
+ 
     CustomToolbar:
         id: toolbar
         size_hint_y: None
@@ -24,28 +24,51 @@ Screen:
         pos_hint: {"top": 1}
         elevation: 10
         spacing: "20dp"
-        
-        MDIconButton:
-            id: btn_left_top
-            icon: "menu"
-            pos_hint: {"center_y": .5}
-            on_release: app.show_tap_target_view_top()
-            text_color: toolbar.specific_text_color
-            theme_text_color: "Custom"
 
-        MDLabel:
-            text: "TapTargetViewDemo"
-            font_style: 'H6'
-            theme_text_color: "Custom"
-            text_color: toolbar.specific_text_color
+        AnchorLayout:
+            anchor_x: "left"
+            MDIconButton:
+                id: menu_btn
+                md_bg_color: app.theme_cls.primary_color
+                #theme_text_color: "Custom"
+                #text_color: 0, 0, 0, 1
+                icon: "menu"
+                opposite_colors: True
 
-        
-    MDFloatingActionButton:
-        id: btn_right_button
-        icon: "plus"
-        on_release: app.show_tap_target_view_bottom()
-        pos: (root.width - (self.width) - dp(20), 10)
-        md_bg_color: app.theme_cls.primary_color
+        BoxLayout:
+            AnchorLayout:
+            BoxLayout:
+                AnchorLayout:
+                    MDIconButton:
+                        id: search_btn
+                        md_bg_color: 0, 0, 0, 0
+                        theme_text_color:"Custom"
+                        text_color: 1, 1, 1, 1
+                        icon: "magnify"
+                        opposite_colors: True
+                AnchorLayout:
+                    MDIconButton:
+                        id: info_btn
+                        md_bg_color: 0, 0, 0, 0
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1
+                        icon: "information-outline"
+                        opposite_colors: True
+
+    BoxLayout:
+        orientation:"vertical"
+        Label:
+            id: lbl
+            text: ""
+            color: .8, .8, .8, 1
+            font_size: sp(50)
+        BoxLayout:
+            AnchorLayout:
+                size_hint_x: .3
+                MDFloatingActionButton:
+                    id: add_btn
+                    icon: 'plus'
+            AnchorLayout:
 """
 
 
@@ -56,53 +79,62 @@ class CustomToolbar(
 
 
 class TapTargetViewDemo(MDApp):
-    screen = None
-    tap_target_view_top = None
-    tap_target_view_bottom = None
-
     def build(self):
-        self.screen = Builder.load_string(KV)
-        return self.screen
+        x = Builder.load_string(example_kv)
+        self.lbl = x.ids.lbl
+        self.final_text = "Congrats! You're \n educated now!!"
 
-    def show_tap_target_view_bottom(self):
-        if self.tap_target_view_bottom:
-            self.tap_target_view_bottom.stop()
-            self.tap_target_view_bottom = None
-            return
-
-        self.tap_target_view_bottom = self.get_tap_target_view(
-            self.screen.ids.btn_right_button, "right_bottom"
-        )
-        self.tap_target_view_bottom.start()
-
-    def show_tap_target_view_top(self):
-        if self.tap_target_view_top:
-            self.screen.ids.btn_left_top.text_color = (
-                self.screen.ids.toolbar.specific_text_color
-            )
-            self.tap_target_view_top.stop()
-            self.tap_target_view_top = None
-            return
-
-        self.tap_target_view_top = self.get_tap_target_view(
-            self.screen.ids.btn_left_top, "left_top"
-        )
-        self.screen.ids.btn_left_top.text_color = self.theme_cls.opposite_bg_darkest
-        self.tap_target_view_top.start()
-
-    def get_tap_target_view(self, widget, widget_position):
-        return TapTargetView(
-            widget=widget,
+        ttv4 = TapTargetView(
+            widget=x.ids.add_btn,
+            outer_radius=dp(225),
             cancelable=True,
-            outer_radius=dp(400),
-            target_radius=dp(72),
             outer_circle_color=self.theme_cls.primary_color[:-1],
             outer_circle_alpha=0.9,
             title_text="This is an add button",
-            title_text_size="24sp",
             description_text="You can cancel it by clicking outside",
-            widget_position=widget_position,
+            widget_position="left_bottom",
+            end=self.set_text,
         )
+
+        ttv3 = TapTargetView(
+            widget=x.ids.info_btn,
+            outer_radius=dp(325),
+            outer_circle_color=self.theme_cls.primary_color[:-1],
+            outer_circle_alpha=0.8,
+            target_circle_color=[255 / 255, 34 / 255, 212 / 255],
+            title_text="This is the info button",
+            description_text="No information available yet!",
+            widget_position="center",
+            title_position="left_bottom",
+            end=ttv4.start,
+        )
+
+        ttv2 = TapTargetView(
+            widget=x.ids.search_btn,
+            outer_circle_color=[155 / 255, 89 / 255, 182 / 255],
+            target_circle_color=[0.2, 0.2, 0.2],
+            title_text="This is the search button",
+            description_text="It won't search anything for now.",
+            widget_position="center",
+            title_position="left_bottom",
+            end=ttv3.start,
+        )
+
+        ttv1 = TapTargetView(
+            widget=x.ids.menu_btn,
+            outer_circle_color=self.theme_cls.primary_color[:-1],
+            outer_circle_alpha=0.85,
+            title_text="Menu Button",
+            description_text="Opens up the drawer",
+            widget_position="center",
+            title_position="right_bottom",
+            end=ttv2.start,
+        )
+        ttv1.start()
+        return x
+
+    def set_text(self, *args):
+        self.lbl.text = self.final_text
 
 
 TapTargetViewDemo().run()
