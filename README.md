@@ -1,6 +1,8 @@
 ![TapTargetView demo](demo/ttv_demo_2.gif)
 
 # TapTargetView [![Build Status](https://travis-ci.org/shashi278/TapTargetView.svg?branch=master)](https://travis-ci.org/shashi278/TapTargetView)
+###### <i>This is now being used in [KivyMD](https://github.com/shashi278/KivyMD)</i>
+
 An attempt to mimic android's TapTargetView using Python and Kivy.
 
 Inspired by [Android's TapTargetView](https://github.com/KeepSafe/TapTargetView)
