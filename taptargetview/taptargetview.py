@@ -233,7 +233,9 @@ class TapTargetView(EventDispatcher):
         self.outer_radius *= 2
         self.target_radius *= 2
 
-        self.core_title_text = Label(markup=True, size_hint=(None, None))
+        self.core_title_text = Label(
+            markup=True, size_hint=(None, None), bold=self.title_text_bold
+        )
         self.core_title_text.bind(texture_size=self.core_title_text.setter("size"))
         self.core_description_text = Label(markup=True, size_hint=(None, None))
         self.core_description_text.bind(
