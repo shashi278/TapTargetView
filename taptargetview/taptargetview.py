@@ -360,7 +360,7 @@ class TapTargetView(EventDispatcher):
 
             Color(a=1)
 
-    def start(self):
+    def start(self, *args):
         self._initialize()
         self._animate_outer()
 
