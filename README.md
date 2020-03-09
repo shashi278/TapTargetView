@@ -28,7 +28,7 @@ TapTargetView(
         description_text="It does something when pressed",
         widget_position="center",
         title_position="right_bottom",
-        on_end= my_callback
+        end= my_callback
 ).start()
 
 ```
@@ -45,7 +45,7 @@ ttv2= TapTargetView(
         title_text= "My Second Button",
         description_text="It too does something when pressed",
         widget_position="left",
-        on_end= my_callback
+        end= my_callback
       )
       
 ttv1= TapTargetView(
@@ -56,7 +56,7 @@ ttv1= TapTargetView(
         description_text="It does something when pressed",
         widget_position="center",
         title_position="right_bottom",
-        on_end= ttv2.start
+        end= ttv2.start
         )
 
 ttv1.start()
@@ -97,6 +97,6 @@ stop_on_outer_touch:    (optional), whether clicking on outer circle stops the a
                         defaults to False
 stop_on_target_touch:   (optional), whether clicking on target circle should stop the animation,
                         defaults to True
-on_end:                 (optional), Function to be called when the animation stops, defaults to None
+end:                    (optional), Function to be called when the animation stops, defaults to None
 """
 ```
