@@ -20,7 +20,7 @@ deploy:
   provider: pypi
   user: "__token__"
   password:
-    secure: "pypi-AgEIcHlwaS5vcmcCJGM3M2I5M2Y1LTQ3NDQtNDNhMi04M2E3LWQ0YTY2YzE4Mjk5ZAACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogMX0AAAYg70xixGL_CDgiTRvzec-ncAUtgDpOkDxszyyh99kwAJI"
+    secure: "pypi-AgEIcHlwaS5vcmcCJDdhMTkyODMzLWE1Y2MtNDc3My1hYzI0LTM2ZGU5NTRkNmY4MAACPnsicGVybWlzc2lvbnMiOiB7InByb2plY3RzIjogWyJ0YXB0YXJnZXR2aWV3Il19LCAidmVyc2lvbiI6IDF9AAAGIAnncDRYv5MyAxTGReIb8VblzDX1pWqXr5dDNL5OhBc3"
   distributions: "sdist bdist_wheel"
   on:
     tags: true
